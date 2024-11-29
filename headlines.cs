@@ -144,25 +144,19 @@ class Headlines
 
         string[] tokens = newsHeadline.Split(" "); // O(N). might be faster using ReadOnlySpan<char>.Split
 
-        // chunk the headline into all possible n-grams (substrings of n whitespace delimited words) of all lengths 1 to min(maxWordsInName,words)
-
-        var ngrams = new HashSet<string>(tokens, StringComparer.OrdinalIgnoreCase);
-
-        // add all chunks to set, O(1) each time
-        for (int ngramLength = 2; ngramLength <= Math.Min(maxWordsInName, tokens.Length); ngramLength++)
+        // chunk the headline into all possible n-grams (substrings of n whitespace delimited words) of all lengths 1 to min(maxWordsInName,words)        
+        for (int ngramLength = 1; ngramLength <= Math.Min(maxWordsInName, tokens.Length); ngramLength++)
         {
             for (int i = 0; i <= tokens.Length-ngramLength; i++)
             {
                 Range r = new Range(i, i+ngramLength);
-                ngrams.Add(string.Join(" ", tokens[r]));
-            }
-        }
+                string ngram = string.Join(" ", tokens[r]);
 
-        foreach (string ng in ngrams)
-        {
-            // if ngram exists in Dictionary<name,ticker> then add associated ticker to result, O(1) * ngrams
-            if (namesToTickers.TryGetValue(ng, out string ticker))
-                tickers.Add(ticker);
+                // if ngram exists in Dictionary<name, ticker> then add associated ticker to result, O(1) * ngrams
+                if (namesToTickers.TryGetValue(ngram, out string ticker))
+                    tickers.Add(ticker);
+
+            }
         }
 
         return tickers;

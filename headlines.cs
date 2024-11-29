@@ -149,8 +149,7 @@ class Headlines
         {
             for (int i = 0; i <= tokens.Length-ngramLength; i++)
             {
-                Range r = new Range(i, i+ngramLength);
-                string ngram = string.Join(" ", tokens[r]);
+                string ngram = string.Join(" ", tokens[i..(i+ngramLength)]);
 
                 // if ngram exists in Dictionary<name, ticker> then add associated ticker to result, O(1) * ngrams
                 if (namesToTickers.TryGetValue(ngram, out string ticker))

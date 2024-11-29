@@ -144,7 +144,7 @@ class Headlines
 
         string[] tokens = newsHeadline.Split(" "); // O(N). might be faster using ReadOnlySpan<char>.Split
 
-        // chunk the headline into all possible n-grams (fragments of n whitespace delimited words) of all lengths 1 to min(maxWordsInName,words)
+        // chunk the headline into all possible n-grams (substrings of n whitespace delimited words) of all lengths 1 to min(maxWordsInName,words)
 
         var ngrams = new HashSet<string>(tokens, StringComparer.OrdinalIgnoreCase);
 

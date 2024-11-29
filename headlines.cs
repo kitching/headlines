@@ -1,7 +1,8 @@
 using System.Diagnostics;
 
 class Headlines
-{    static void Main(string[] args)
+{    
+    static void Main(string[] args)
     {
         var h = new Headlines();
         h.Load();
